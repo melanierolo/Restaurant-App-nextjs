@@ -4,7 +4,7 @@ import styles from "../../styles/Home.module.css";
 export default function Home() {
   return (
     <>
-      <h1>Hello page subrestaurant 🙂!! </h1>
+      <h1>Restaurant Top Page 🙂!! </h1>
     </>
   );
 }

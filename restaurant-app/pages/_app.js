@@ -1,11 +1,19 @@
 import "../styles/globals.css";
-import React from "react";
+import React, { useContext } from "react";
+import AppContext from "../components/context";
 import Head from "next/head";
 import Layout from "../components/Layout";
 
-function MyApp({ Component, pageProps }) {
+function MyApp(props) {
+  var { user } = useContext(AppContext);
+  const { Component, pageProps } = props;
+
   return (
-    <>
+    <AppContext.Provider
+      value={{
+        user: null,
+      }}
+    >
       <Head>
         <link
           rel="stylesheet"
@@ -17,7 +25,7 @@ function MyApp({ Component, pageProps }) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </>
+    </AppContext.Provider>
   );
 }
 

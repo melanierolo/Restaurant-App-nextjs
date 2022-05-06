@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { useState } from "react";
+import Dishes from "./dishes";
 
 import {
   Button,
@@ -12,6 +13,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { render } from "react-dom";
 
 function RestaurantList(props) {
   const [restaurantID, setRestaurantID] = useState(0);
@@ -52,8 +54,15 @@ function RestaurantList(props) {
     data.restaurants.data.filter((res) => {
       return res.attributes.name.toLowerCase().includes(props.search);
     }) || [];
+  console.log("result searchQuery", searchQuery);
 
   let restId = searchQuery[0] ? searchQuery[0].id : null;
+  console.log("result restId-restaurantList", restId);
+  // definet renderer for Dishes
+  const renderDishes = (restaurant_ID) => {
+    return <Dishes restId={restaurant_ID}> </Dishes>;
+  };
+  renderDishes(restId);
 
   if (searchQuery.length > 0) {
     const restList = searchQuery.map((res) => (
@@ -83,6 +92,7 @@ function RestaurantList(props) {
     return (
       <Container>
         <Row xs="3">{restList}</Row>
+        <Row xs="3">{renderDishes(restId)}</Row>
       </Container>
     );
   } else {

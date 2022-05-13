@@ -1,4 +1,5 @@
 /* /lib/auth.js */
+//https://strapi.io/blog/nextjs-react-hooks-strapi-auth-4
 
 import { useEffect } from "react";
 import Router from "next/router";

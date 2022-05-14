@@ -11,7 +11,12 @@ function MyApp(props) {
   return (
     <AppContext.Provider
       value={{
+        cart: false,
+        addItem: false,
+        removeItem: false,
+        isAuthenticated: false,
         user: null,
+        setUser: () => {},
       }}
     >
       <Head>

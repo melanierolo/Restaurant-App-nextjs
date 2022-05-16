@@ -1,11 +1,11 @@
 import "../styles/globals.css";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import AppContext from "../components/context";
 import Head from "next/head";
 import Layout from "../components/Layout";
 
 function MyApp(props) {
-  var { user } = useContext(AppContext);
+  const [user, setUser] = useState(null);
   const { Component, pageProps } = props;
 
   return (
@@ -15,8 +15,8 @@ function MyApp(props) {
         addItem: false,
         removeItem: false,
         isAuthenticated: false,
-        user: null,
-        setUser: () => {},
+        user: user,
+        setUser: setUser,
       }}
     >
       <Head>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Cart from "../components/cart";
 import {
   HttpLink,
   InMemoryCache,
@@ -30,6 +31,7 @@ function Home() {
           </InputGroup>
         </div>
         <RestaurantList search={query} />
+        <Cart> </Cart>
       </ApolloProvider>
     </>
   );

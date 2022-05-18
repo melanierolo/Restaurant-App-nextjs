@@ -1,19 +1,14 @@
 "use strict";
-/**
- * Order.js controller
- *
- * @description: A set of functions called "actions" for managing `Order`.
- */
-// note that this needs to be a "private" key from STRIPE
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-module.exports = {
-  /**
-   * Create a/an order record.
-   *
-   * @return {Object}
-   */
 
-  create: async (ctx) => {
+/**
+ *  order controller
+ */
+
+const { createCoreController } = require("@strapi/strapi").factories;
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+module.exports = createCoreController("api::order.order", ({ strapi }) => ({
+  async create(ctx) {
     const { address, amount, dishes, token, city, state } = JSON.parse(
       ctx.request.body
     );
@@ -26,18 +21,22 @@ module.exports = {
       description: `Order ${new Date()} by ${ctx.state.user._id}`,
       source: token,
     });
-
     // Register the order in the database
-    const order = await strapi.services.order.create({
-      user: ctx.state.user.id,
-      charge_id: charge.id,
-      amount: stripeAmount,
-      address,
-      dishes,
-      city,
-      state,
+    const entity = await strapi.service("api::order.order").create({
+      data: {
+        publishedAt: new Date(),
+        user: ctx.state.user.id,
+        charge_id: charge.id,
+        amount: stripeAmount,
+        address,
+        dishes,
+        city,
+        state,
+      },
     });
 
-    return order;
+    const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+
+    return this.transformResponse(sanitizedEntity);
   },
-};
+}));

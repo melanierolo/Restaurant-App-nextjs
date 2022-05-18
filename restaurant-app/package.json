@@ -12,6 +12,8 @@
     "@apollo/client": "^3.6.2",
     "@apollo/react-hooks": "^4.0.0",
     "@apollo/react-ssr": "^4.0.0",
+    "@stripe/react-stripe-js": "^1.8.0",
+    "@stripe/stripe-js": "^1.29.0",
     "axios": "^0.27.2",
     "graphql": "^16.4.0",
     "isomorphic-fetch": "^3.0.0",

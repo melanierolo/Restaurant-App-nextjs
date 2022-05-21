@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import AppContext from "../components/context";
 import Head from "next/head";
 import Layout from "../components/Layout";
+import { SessionProvider } from "next-auth/react";
 
 function MyApp(props) {
   let { cart, addItem, removeItem } = useContext(AppContext);

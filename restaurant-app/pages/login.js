@@ -12,7 +12,7 @@ import {
   Label,
   Input,
 } from "reactstrap";
-import { login } from "../components/auth";
+import { login, IndexPage } from "../components/auth";
 import AppContext from "../components/context";
 
 function Login(props) {
@@ -104,6 +104,8 @@ function Login(props) {
                     </Button>
                   </FormGroup>
                 </fieldset>
+
+                <Button>Sign in with Google</Button>
               </Form>
             </section>
           </div>

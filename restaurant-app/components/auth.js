@@ -96,3 +96,9 @@ export const withAuthSync = (Component) => {
 
   return Wrapper;
 };
+
+//----------------google-------------------------
+async function myFunction() {
+  const session = await getSession();
+  /* ... */
+}

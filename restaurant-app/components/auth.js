@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Router from "next/router";
 import Cookie from "js-cookie";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
 
@@ -96,9 +97,3 @@ export const withAuthSync = (Component) => {
 
   return Wrapper;
 };
-
-//----------------google-------------------------
-async function myFunction() {
-  const session = await getSession();
-  /* ... */
-}

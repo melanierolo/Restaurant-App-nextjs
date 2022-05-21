@@ -14,22 +14,28 @@ import {
 } from "reactstrap";
 import { login, IndexPage } from "../components/auth";
 import AppContext from "../components/context";
+import { useSession } from "next-auth/react";
 
 function Login(props) {
-  const [data, updateData] = useState({ identifier: "", password: "" });
+  const [dataLogin, updatedataLogin] = useState({
+    identifier: "",
+    password: "",
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
+  const { data, status } = useSession();
   const { user, setUser, isAuthenticated } = useContext(AppContext);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated || status === "authenticated") {
       router.push("/"); // redirect if you're already logged in
+      console.log("next-auth", { user: data?.user });
     }
-  }, []);
+  }, [status, data]);
 
   function onChange(event) {
-    updateData({ ...data, [event.target.name]: event.target.value });
+    updatedataLogin({ ...dataLogin, [event.target.name]: event.target.value });
   }
 
   return (
@@ -87,15 +93,15 @@ function Login(props) {
                       color="primary"
                       onClick={() => {
                         setLoading(true);
-                        login(data.identifier, data.password)
+                        login(dataLogin.identifier, dataLogin.password)
                           .then((res) => {
                             setLoading(false);
                             // set authed User in global context to update header/app state
-                            setUser(res.data.user);
+                            setUser(res.dataLogin.user);
                             console.log("appContext", appContext);
                           })
                           .catch((error) => {
-                            //setError(error.response.data);
+                            //setError(error.response.dataLogin);
                             setLoading(false);
                           });
                       }}

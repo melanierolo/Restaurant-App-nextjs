@@ -62,7 +62,6 @@ export default NextAuth({
       authorization: GOOGLE_AUTHORIZATION_URL,
     }),
   ],
-  database: process.env.NEXT_PUBLIC_DATABASE_URL,
   //Callbacks
   callbacks: {
     async jwt({ token, user, account }) {

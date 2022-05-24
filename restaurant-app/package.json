@@ -12,6 +12,7 @@
     "@apollo/client": "^3.6.2",
     "@apollo/react-hooks": "^4.0.0",
     "@apollo/react-ssr": "^4.0.0",
+    "@next-auth/typeorm-legacy-adapter": "^1.0.3",
     "@stripe/react-stripe-js": "^1.8.0",
     "@stripe/stripe-js": "^1.29.0",
     "add": "^2.0.6",
@@ -25,7 +26,8 @@
     "pg": "^8.7.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "reactstrap": "^9.0.2"
+    "reactstrap": "^9.0.2",
+    "typeorm": "^0.2.45"
   },
   "devDependencies": {
     "eslint": "8.14.0",

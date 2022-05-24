@@ -8,6 +8,7 @@ import {
 } from "@apollo/client";
 import RestaurantList from "../components/restaurantList";
 import { InputGroup, InputGroupText, Input } from "reactstrap";
+import { useSession } from "next-auth/react";
 
 function Home() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";

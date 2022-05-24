@@ -6,6 +6,7 @@ import Router from "next/router";
 import Cookie from "js-cookie";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
 
@@ -60,6 +61,8 @@ export const login = (identifier, password) => {
 };
 
 export const logout = () => {
+  //In order to logout- next-auth
+  signOut({ callbackUrl: "http://localhost:3000" });
   //remove token and user cookie
   Cookie.remove("token");
   delete window.__user;

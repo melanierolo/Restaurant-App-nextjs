@@ -83,7 +83,7 @@ function MyApp(props) {
   };
 
   return (
-    <SessionProvider>
+    <SessionProvider session={pageProps.session}>
       <AppContext.Provider
         value={{
           cart: state.cart,

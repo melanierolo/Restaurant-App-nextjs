@@ -11,31 +11,54 @@ import {
   FormGroup,
   Label,
   Input,
+  Card,
 } from "reactstrap";
-import { login, IndexPage } from "../components/auth";
+import { login, registerUser } from "../components/auth";
 import AppContext from "../components/context";
-import { useSession } from "next-auth/react";
+import { useSession, getProviders, signIn } from "next-auth/react";
 
 function Login(props) {
-  const [dataLogin, updatedataLogin] = useState({
+  const [data, updatedata] = useState({
     identifier: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
-  const { data, status } = useSession();
+  const { data: session, status } = useSession();
   const { user, setUser, isAuthenticated } = useContext(AppContext);
 
+  //-----------Provider-google----------
+  const [providers, setProviders] = useState({});
   useEffect(() => {
-    if (isAuthenticated || status === "authenticated") {
-      router.push("/"); // redirect if you're already logged in
-      console.log("next-auth", { user: data?.user });
+    getProviders().then((prov) => {
+      console.log({ prov });
+      setProviders(prov);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/"); // redirect if you're already logged
     }
-  }, [status, data]);
+  }, []);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/"); // redirect if you're already logged in
+      console.log("next-auth_session", session);
+      console.log("next-auth_status", status);
+      registerUser(
+        session.user.name,
+        session.user.email,
+        Math.random().toString(36).slice(2)
+      );
+      setUser(session.user.name);
+    }
+  }, [status, session]);
 
   function onChange(event) {
-    updatedataLogin({ ...dataLogin, [event.target.name]: event.target.value });
+    updatedata({ ...data, [event.target.name]: event.target.value });
   }
 
   return (
@@ -93,15 +116,17 @@ function Login(props) {
                       color="primary"
                       onClick={() => {
                         setLoading(true);
-                        login(dataLogin.identifier, dataLogin.password)
+                        console.log("data", data);
+                        login(data.identifier, data.password)
                           .then((res) => {
                             setLoading(false);
                             // set authed User in global context to update header/app state
-                            setUser(res.dataLogin.user);
-                            console.log("appContext", appContext);
+                            setUser(res.data.user);
+                            console.log("setUser-data", res.data.user);
+                            console.log("appContext", AppContext);
                           })
                           .catch((error) => {
-                            //setError(error.response.dataLogin);
+                            //setError(error.response.data);
                             setLoading(false);
                           });
                       }}
@@ -110,8 +135,27 @@ function Login(props) {
                     </Button>
                   </FormGroup>
                 </fieldset>
-
-                <Button>Sign in with Google</Button>
+                <section>
+                  <FormGroup>
+                    <Card className="my-1">
+                      {Object.values(providers).map((provider) => {
+                        return (
+                          <Button
+                            className="text-center"
+                            key={provider.id}
+                            outline
+                            onClick={() => {
+                              signIn(provider.id);
+                              console.log("provider-google:", provider);
+                            }}
+                          >
+                            Sign in with {provider.name}
+                          </Button>
+                        );
+                      })}
+                    </Card>
+                  </FormGroup>
+                </section>
               </Form>
             </section>
           </div>
